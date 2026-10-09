@@ -1,0 +1,132 @@
+<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>مصروفي AI</title>
+<style>
+:root{--bg:#f4f6f8;--cd:#fff;--tx:#14213d;--mu:#6b7785;--pr:#0f766e;--in:#16a34a;--ex:#dc2626;--bd:#e3e8ee;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0f1720;--cd:#192431;--tx:#eef2f6;--mu:#9aa7b4;--pr:#2dd4bf;--in:#4ade80;--ex:#f87171;--bd:#2a3846}}
+:root[data-theme=dark]{--bg:#0f1720;--cd:#192431;--tx:#eef2f6;--mu:#9aa7b4;--pr:#2dd4bf;--in:#4ade80;--ex:#f87171;--bd:#2a3846}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.5 "Segoe UI",Tahoma,Arial,sans-serif;padding-bottom:84px}
+header{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;font-weight:700;font-size:20px;color:var(--pr)}
+main{max-width:900px;margin:auto;padding:0 12px}
+nav{position:fixed;bottom:0;left:0;right:0;display:flex;background:var(--cd);border-top:1px solid var(--bd);padding-bottom:env(safe-area-inset-bottom,0px);z-index:5}
+nav button{flex:1;padding:12px 2px;border:0;background:none;color:var(--mu);font:inherit;font-size:13px}nav button.on{color:var(--pr);font-weight:700}
+.card{background:var(--cd);border:1px solid var(--bd);border-radius:14px;padding:14px;margin-bottom:12px}
+.g{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:12px}.g .card{margin:0}
+.k{color:var(--mu);font-size:13px}.v{font-size:19px;font-weight:700}.in{color:var(--in)}.ex{color:var(--ex)}
+button,input,select,textarea{font:inherit;color:var(--tx)}
+input,select,textarea{width:100%;padding:12px;border:1px solid var(--bd);border-radius:10px;background:var(--bg);margin:4px 0 10px}
+.b{background:var(--pr);color:#fff;border:0;border-radius:12px;padding:12px 16px;font-weight:700}.b2{background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:8px 12px}
+.d{color:var(--ex)}.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.row>*{flex:1}
+.fab{position:fixed;left:16px;bottom:calc(76px + env(safe-area-inset-bottom,0px));width:60px;height:60px;border-radius:50%;font-size:32px;padding:0;z-index:6;box-shadow:0 4px 14px #0004}
+.bar{height:10px;border-radius:6px;background:var(--bd);overflow:hidden}.bar i{display:block;height:100%;background:var(--pr)}
+.ov{position:fixed;inset:0;background:#0008;z-index:20;display:flex;align-items:flex-end;justify-content:center}
+.sh{background:var(--cd);width:100%;max-width:560px;max-height:92%;overflow:auto;border-radius:18px 18px 0 0;padding:16px}
+.tg{display:flex;gap:8px;margin-bottom:10px}.tg button{flex:1;padding:12px;border-radius:10px;border:1px solid var(--bd);background:var(--bg)}.tg .on{background:var(--pr);color:#fff}
+.ch{display:flex;align-items:flex-end;gap:3px;height:120px;overflow-x:auto}.ch div{flex:1;min-width:14px;display:flex;align-items:flex-end;gap:1px;height:100%}.ch i{flex:1;border-radius:3px 3px 0 0;min-height:1px}
+.tb{width:100%;border-collapse:collapse;font-size:14px}.tb td,.tb th{padding:6px 4px;border-bottom:1px solid var(--bd);text-align:right}
+.tx{display:flex;justify-content:space-between;gap:8px;padding:10px 0;border-bottom:1px solid var(--bd)}
+#toast{position:fixed;top:12px;left:50%;transform:translateX(-50%);background:#111;color:#fff;padding:10px 16px;border-radius:10px;z-index:30;display:none}
+@media print{nav,.fab,header button,.np{display:none!important}body{background:#fff;color:#000}}
+</style></head><body>
+<header><span>💰 مصروفي AI</span><button class="b2" onclick="theme()">🌓</button></header><main id="v"></main><div id="toast"></div>
+<button class="b fab" onclick="openForm()" aria-label="إضافة">+</button>
+<nav><button data-t="home" class="on">الرئيسية</button><button data-t="tx">المعاملات</button><button data-t="rep">التقارير</button><button data-t="set">الإعدادات</button></nav>
+<script>
+const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const D0={income:['راتب وظيفة إيجي سيرف','إكرامية توزيع فيز البنك','دخل شغل الدليفري','دخل إضافي'],
+cats:{'مصاريف المكنة':['بنزين','زيت','صيانة وإصلاحات'],'مصاريف العمل':['باقة الإنترنت','مستلزمات العمل','مصاريف أخرى'],'مصاريف البيت':['أكل وشرب','علاج','احتياجات منزلية'],'شغل الزوجة':['مصاريف شغل الزوجة','مستلزمات العمل','مصاريف أخرى'],'التسوق':[],'الأقساط والديون':[],'الترفيه':[],'المصاريف الشخصية':[],'مصاريف أخرى':[]},tx:[],start:0,cur:'ج.م',theme:''};
+let S;try{S=JSON.parse(localStorage.getItem('masrofy')||'null')}catch(e){}
+S=Object.assign(JSON.parse(JSON.stringify(D0)),S||{});
+const save=()=>{try{localStorage.setItem('masrofy',JSON.stringify(S))}catch(e){toast('تعذر الحفظ في المتصفح')}};
+const toast=m=>{const t=$('#toast');t.textContent=m;t.style.display='block';setTimeout(()=>t.style.display='none',2500)};
+const p2=n=>String(n).padStart(2,'0'),iso=d=>d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate()),disp=d=>d.slice(8)+'/'+d.slice(5,7)+'/'+d.slice(0,4);
+const money=n=>new Intl.NumberFormat('ar-EG',{maximumFractionDigits:2}).format(Math.round(n*100)/100)+' '+S.cur;
+const T=iso(new Date()),PAY=['كاش','فودافون كاش','انستاباي','بطاقة بنكية','تحويل بنكي'];
+const theme=()=>{S.theme=S.theme=='dark'?'light':'dark';save();document.documentElement.dataset.theme=S.theme};if(S.theme)document.documentElement.dataset.theme=S.theme;
+let tab='home',P={k:'month',m:T.slice(0,7),a:T,b:T},F={q:'',t:'',c:'',s:'d'},R={m:T.slice(0,7),y:T.slice(0,4)};
+const addD=(s,n)=>{const d=new Date(s+'T12:00');d.setDate(d.getDate()+n);return iso(d)};
+const eom=m=>iso(new Date(+m.slice(0,4),+m.slice(5),0));
+function range(){const k=P.k;if(k=='today')return[T,T];if(k=='week'){const f=addD(T,-((new Date().getDay()+1)%7));return[f,addD(f,6)]}
+if(k=='month')return[T.slice(0,7)+'-01',eom(T.slice(0,7))];if(k=='sel')return[P.m+'-01',eom(P.m)];return[P.a,P.b]}
+const inR=(l,a,b)=>l.filter(t=>t.date>=a&&t.date<=b),sum=(l,ty)=>l.filter(t=>t.type==ty).reduce((s,t)=>s+t.amount,0);
+const grp=(l,f)=>{const o={};l.forEach(t=>{const k=f(t);o[k]=(o[k]||0)+t.amount});return Object.entries(o).sort((a,b)=>b[1]-a[1])};
+const bal=()=>S.start+sum(S.tx,'in')-sum(S.tx,'ex');
+function dlg(msg,def,cb){const o=document.createElement('div');o.className='ov';o.style.alignItems='center';
+o.innerHTML=`<div class="sh" style="border-radius:16px;max-width:380px"><p>${esc(msg)}</p>${def!==null?`<input id="di" value="${esc(def)}">`:''}<div class="row"><button class="b" id="ok">تأكيد</button><button class="b2" id="no">إلغاء</button></div></div>`;
+document.body.append(o);$('#no').onclick=()=>o.remove();$('#ok').onclick=()=>{const v=def!==null?$('#di').value.trim():true;if(def!==null&&!v)return;o.remove();cb(v)}}
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{tab=b.dataset.t;document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('on',x==b));render();scrollTo(0,0)});
+function filt(){const o=['today','week','month','sel','custom'],n=['اليوم','هذا الأسبوع','هذا الشهر','شهر محدد','فترة مخصصة'];
+return`<div class="card np"><select onchange="P.k=this.value;render()">${o.map((x,i)=>`<option value="${x}" ${P.k==x?'selected':''}>${n[i]}</option>`).join('')}</select>
+${P.k=='sel'?`<input type="month" value="${P.m}" onchange="P.m=this.value||P.m;render()">`:''}${P.k=='custom'?`<div class="row"><input type="date" value="${P.a}" onchange="P.a=this.value;render()"><input type="date" value="${P.b}" onchange="P.b=this.value;render()"></div>`:''}</div>`}
+const pie=(l,mx,col)=>l.map(([k,v])=>`<div style="margin:8px 0"><div class="row" style="justify-content:space-between"><span>${esc(k)}</span><b>${money(v)} (${mx?Math.round(v/mx*100):0}٪)</b></div><div class="bar"><i style="width:${mx?v/mx*100:0}%;${col?'background:'+col:''}"></i></div></div>`).join('')||'<p class="k">لا توجد بيانات</p>';
+function home(){const[a,b]=range(),L=inR(S.tx,a,b),mo=T.slice(0,7),ML=inR(S.tx,mo+'-01',eom(mo)),TL=inR(S.tx,T,T);
+const ti=sum(TL,'in'),te=sum(TL,'ex'),mi=sum(ML,'in'),me=sum(ML,'ex');
+const C=[['إجمالي الدخل اليوم',ti,'in'],['إجمالي المصروفات اليوم',te,'ex'],['صافي دخل اليوم',ti-te,ti-te<0?'ex':'in'],['إجمالي الدخل خلال الشهر',mi,'in'],['إجمالي المصروفات خلال الشهر',me,'ex'],['صافي دخل الشهر',mi-me,mi-me<0?'ex':'in'],['الرصيد التراكمي',bal(),bal()<0?'ex':'in'],['متوسط المصروفات اليومية',me/+T.slice(8),'ex']];
+const exL=L.filter(t=>t.type=='ex'),tE=sum(L,'ex'),tI=sum(L,'in'),cats=grp(exL,t=>t.cat||'—');
+const days=[];for(let d=a;d<=b&&days.length<62;d=addD(d,1))days.push(d);
+const dd=days.map(d=>[sum(inR(L,d,d),'in'),sum(inR(L,d,d),'ex')]),mx=Math.max(1,...dd.flat());
+const prev=[0,1,2].map(i=>{const d=new Date(+mo.slice(0,4),+mo.slice(5)-1-i,1),m=iso(d).slice(0,7),l=inR(S.tx,m+'-01',eom(m));return`<tr><td>${m.slice(5)}/${m.slice(0,4)}</td><td class="in">${money(sum(l,'in'))}</td><td class="ex">${money(sum(l,'ex'))}</td><td>${money(sum(l,'in')-sum(l,'ex'))}</td></tr>`}).join('');
+return filt()+`<div class="g">${C.map(c=>`<div class="card"><div class="k">${c[0]}</div><div class="v ${c[2]}">${money(c[1])}</div></div>`).join('')}</div>
+<div class="card"><h3>أنا بصرف فلوسي في إيه؟</h3><p class="k">إجمالي المصروفات في الفترة: ${money(tE)}</p>${pie(cats,tE,'var(--ex)')}</div>
+<div class="card"><h3>أكبر الأقسام والأقسام الفرعية</h3>${pie(grp(exL,t=>(t.cat||'—')+' ← '+(t.sub||'عام')).slice(0,6),tE,'var(--ex)')}</div>
+<div class="card"><h3>الدخل حسب المصدر</h3>${pie(grp(L.filter(t=>t.type=='in'),t=>t.src||'—'),tI,'var(--in)')}</div>
+<div class="card"><h3>الدخل مقابل المصروفات يوميًا</h3><div class="ch">${dd.map(x=>`<div><i style="height:${x[0]/mx*100}%;background:var(--in)"></i><i style="height:${x[1]/mx*100}%;background:var(--ex)"></i></div>`).join('')}</div><p class="k"><span class="in">■</span> دخل <span class="ex">■</span> مصروفات — صافي الفترة: <b>${money(tI-tE)}</b></p></div>
+<div class="card"><h3>مقارنة الشهر الحالي بالأشهر السابقة</h3><table class="tb"><tr><th>الشهر</th><th>دخل</th><th>مصروفات</th><th>صافي</th></tr>${prev}</table></div>`}
+function txList(){const[a,b]=range();let all=[...S.tx].sort((x,y)=>x.date<y.date?-1:x.date>y.date?1:x.id-y.id),rb={},c=S.start;all.forEach(t=>{c+=t.type=='in'?t.amount:-t.amount;rb[t.id]=c});
+let l=inR(S.tx,a,b).filter(t=>(!F.t||t.type==F.t)&&(!F.c||t.cat==F.c||t.src==F.c)&&(!F.q||(t.desc+' '+t.notes).includes(F.q)));
+l.sort((x,y)=>F.s=='d'?(y.date.localeCompare(x.date)||y.id-x.id):F.s=='da'?(x.date.localeCompare(y.date)||x.id-y.id):F.s=='h'?y.amount-x.amount:x.amount-y.amount);
+if(!l.length)return'<p class="k">لا توجد معاملات في هذه الفترة</p>';let h='',last='';
+l.forEach(t=>{if(t.date!=last&&F.s[0]=='d'){last=t.date;const dl=inR(S.tx,t.date,t.date);h+=`<div class="k" style="margin-top:12px"><b>${disp(t.date)}</b> — دخل ${money(sum(dl,'in'))} / مصروف ${money(sum(dl,'ex'))}</div>`}
+h+=`<div class="tx"><div><b>${esc(t.type=='in'?t.src:t.cat+(t.sub?' ← '+t.sub:''))}</b><div class="k">${F.s[0]!='d'?disp(t.date)+' · ':''}${esc(t.pay)} ${t.desc?'· '+esc(t.desc):''}</div><div class="k">الرصيد: ${money(rb[t.id])}</div></div><div style="text-align:left"><b class="${t.type}">${t.type=='in'?'+':'-'}${money(t.amount)}</b><div><button class="b2" onclick="openForm(${t.id})">✏️</button> <button class="b2 d" onclick="delTx(${t.id})">🗑</button></div></div></div>`});return h}
+function txv(){const cs=[...Object.keys(S.cats),...S.income];return filt()+`<div class="card np"><input placeholder="🔍 بحث في الوصف" value="${esc(F.q)}" oninput="F.q=this.value;$('#lst').innerHTML=txList()"><div class="row"><select onchange="F.t=this.value;render()"><option value="">الكل</option><option value="in" ${F.t=='in'?'selected':''}>دخل</option><option value="ex" ${F.t=='ex'?'selected':''}>مصروف</option></select>
+<select onchange="F.c=this.value;render()"><option value="">كل التصنيفات والمصادر</option>${cs.map(c=>`<option ${F.c==c?'selected':''}>${esc(c)}</option>`).join('')}</select>
+<select onchange="F.s=this.value;render()">${[['d','الأحدث'],['da','الأقدم'],['h','الأعلى مبلغًا'],['l','الأقل مبلغًا']].map(x=>`<option value="${x[0]}" ${F.s==x[0]?'selected':''}>${x[1]}</option>`).join('')}</select></div></div><div class="card" id="lst">${txList()}</div>`}
+function delTx(id){dlg('هل تريد حذف هذه المعاملة نهائيًا؟',null,()=>{S.tx=S.tx.filter(t=>t.id!=id);save();render();toast('تم الحذف')})}
+function parse(s){s=s.replace(/[٠-٩]/g,c=>c.charCodeAt(0)-1632).replace(/[أإآ]/g,'ا');const m=s.match(/\d+(?:[.,]\d+)?/),r={type:/قبضت|كسبت|استلمت|دخل|راتب|مرتب|اكرامي/.test(s)?'in':'ex',amount:m?m[0].replace(',','.'):'',date:/امبارح|امس/.test(s)?addD(T,-1):T,desc:s};
+const K=[[/بنزين/,'مصاريف المكنة','بنزين'],[/زيت/,'مصاريف المكنة','زيت'],[/صيان|اصلاح/,'مصاريف المكنة','صيانة وإصلاحات'],[/نت|باقة/,'مصاريف العمل','باقة الإنترنت'],[/اكل|شرب/,'مصاريف البيت','أكل وشرب'],[/علاج|دواء|دوا/,'مصاريف البيت','علاج'],[/قسط|دين/,'الأقساط والديون',''],[/تسوق|هدوم/,'التسوق',''],[/ترفيه|خروج/,'الترفيه','']];
+if(r.type=='in'){r.src=/ايجي|سيرف|راتب|مرتب/.test(s)?D0.income[0]:/فيز|اكرامي/.test(s)?D0.income[1]:/دليفري|توصيل/.test(s)?D0.income[2]:''}else{const k=K.find(x=>x[0].test(s));if(k){r.cat=k[1];r.sub=k[2]}}return r}
+function openForm(id,pf){const e=typeof id=='number'?S.tx.find(t=>t.id==id):null,x=e||pf||{type:'ex',date:T};let ty=x.type;const o=document.createElement('div');o.className='ov';document.body.append(o);
+const opt=(a,v)=>a.map(i=>`<option ${i==v?'selected':''}>${esc(i)}</option>`).join('');
+function draw(){const cs=Object.keys(S.cats);if(x.cat&&!cs.includes(x.cat))cs.push(x.cat);const ss=[...(S.cats[x.cat]||[])];if(x.sub&&!ss.includes(x.sub))ss.push(x.sub);const sr=[...S.income];if(x.src&&!sr.includes(x.src))sr.push(x.src);
+o.innerHTML=`<div class="sh"><div class="tg"><button class="${ty=='ex'?'on':''}" id="te">مصروف</button><button class="${ty=='in'?'on':''}" id="ti">دخل</button></div>
+${e?'':`<div class="card"><label class="k">إدخال سريع بالعامية (تحليل محلي — راجع النتيجة قبل الحفظ)</label><input id="nl" placeholder="مثال: حطيت بنزين بـ 150 جنيه النهارده"><button class="b2" id="pa">حلّل النص</button></div>`}
+<label class="k">المبلغ</label><input id="am" type="number" inputmode="decimal" min="0" step="0.01" value="${x.amount??''}">
+${ty=='ex'?`<label class="k">القسم</label><select id="ct"><option value="">اختر القسم</option>${opt(cs,x.cat)}</select><label class="k">القسم الفرعي</label><select id="sb"><option value="">—</option>${opt(ss,x.sub)}</select>`:`<label class="k">مصدر الدخل</label><select id="sr"><option value="">اختر المصدر</option>${opt(sr,x.src)}</select>`}
+<label class="k">التاريخ</label><input id="dt" type="date" value="${x.date}"><label class="k">طريقة الدفع</label><select id="py">${opt(PAY,x.pay)}</select>
+<label class="k">الوصف</label><input id="ds" value="${esc(x.desc||'')}"><label class="k">ملاحظات</label><input id="nt" value="${esc(x.notes||'')}"><div class="row"><button class="b" id="sv">حفظ</button><button class="b2" id="cn">إلغاء</button></div></div>`;
+const rd=()=>{x.amount=$('#am').value;x.date=$('#dt').value;x.pay=$('#py').value;x.desc=$('#ds').value;x.notes=$('#nt').value;if(ty=='ex'){x.cat=$('#ct').value;x.sub=$('#sb')?.value}else x.src=$('#sr').value};
+$('#te').onclick=()=>{rd();ty='ex';draw()};$('#ti').onclick=()=>{rd();ty='in';draw()};$('#cn').onclick=()=>o.remove();
+if($('#ct'))$('#ct').onchange=()=>{rd();x.sub='';draw()};
+if($('#pa'))$('#pa').onclick=()=>{const v=$('#nl').value.trim();if(!v)return;const r=parse(v);if(!r.amount)return toast('مفيش مبلغ واضح في النص — اكتبه يدويًا');Object.assign(x,r);ty=r.type;draw();toast('راجع البيانات واختر ما ينقص ثم احفظ')};
+$('#sv').onclick=()=>{rd();const a=parseFloat(x.amount);if(!(a>0))return toast('المبلغ لازم يكون أكبر من صفر');if(!x.date)return toast('اختر التاريخ');
+if(ty=='ex'&&!x.cat)return toast('اختر القسم');if(ty=='in'&&!x.src)return toast('اختر مصدر الدخل');
+const t={id:e?e.id:Date.now()+Math.floor(Math.random()*1e3),type:ty,amount:Math.round(a*100)/100,cat:ty=='ex'?x.cat:'',sub:ty=='ex'?(x.sub||''):'',src:ty=='in'?x.src:'',date:x.date,desc:x.desc||'',pay:x.pay||PAY[0],notes:x.notes||''};
+if(e)S.tx[S.tx.indexOf(e)]=t;else S.tx.push(t);save();o.remove();render();toast('تم الحفظ ✓')}}draw()}
+function repv(){const mL=inR(S.tx,R.m+'-01',eom(R.m)),i=sum(mL,'in'),e=sum(mL,'ex'),nd=+eom(R.m).slice(8),ex=grp(mL.filter(t=>t.type=='ex'),t=>t.cat||'—'),yr=R.y;
+const ms=Array.from({length:12},(_,k)=>{const m=yr+'-'+p2(k+1),l=inR(S.tx,m+'-01',eom(m));return[m,sum(l,'in'),sum(l,'ex')]}),mx=Math.max(1,...ms.flatMap(x=>[x[1],x[2]])),yi=ms.reduce((s,x)=>s+x[1],0),ye=ms.reduce((s,x)=>s+x[2],0);
+return`<div class="card np"><label class="k">الشهر</label><input type="month" value="${R.m}" onchange="R.m=this.value||R.m;render()"></div>
+<div class="card"><h3>تقرير شهر ${R.m.slice(5)}/${R.m.slice(0,4)}</h3><table class="tb"><tr><td>إجمالي الدخل</td><td class="in">${money(i)}</td></tr><tr><td>إجمالي المصروفات</td><td class="ex">${money(e)}</td></tr><tr><td>صافي الدخل</td><td><b>${money(i-e)}</b></td></tr>
+<tr><td>أعلى قسم إنفاقًا</td><td>${ex[0]?esc(ex[0][0])+' ('+money(ex[0][1])+')':'—'}</td></tr><tr><td>متوسط المصروفات اليومية</td><td>${money(e/nd)}</td></tr><tr><td>معدل الادخار</td><td>${i>0?Math.round((i-e)/i*100)+'٪':'غير متاح (لا يوجد دخل)'}</td></tr></table></div>
+<div class="card"><h4>تفصيل الدخل</h4>${pie(grp(mL.filter(t=>t.type=='in'),t=>t.src||'—'),i,'var(--in)')}<h4>تفصيل المصروفات</h4>${pie(ex,e,'var(--ex)')}</div>
+<div class="card"><h3>الملخص السنوي</h3><input type="number" value="${yr}" onchange="R.y=this.value||R.y;render()"><div class="ch">${ms.map(x=>`<div><i style="height:${x[1]/mx*100}%;background:var(--in)"></i><i style="height:${x[2]/mx*100}%;background:var(--ex)"></i></div>`).join('')}</div>
+<table class="tb"><tr><th>الشهر</th><th>دخل</th><th>مصروفات</th><th>صافي</th></tr>${ms.map(x=>`<tr><td>${x[0].slice(5)}</td><td>${money(x[1])}</td><td>${money(x[2])}</td><td>${money(x[1]-x[2])}</td></tr>`).join('')}<tr><th>الإجمالي</th><th>${money(yi)}</th><th>${money(ye)}</th><th>${money(yi-ye)}</th></tr></table></div>
+<div class="card np"><div class="row"><button class="b" onclick="print()">🖨 PDF (طباعة / حفظ كـ PDF)</button><button class="b2" onclick="csv(S.tx,'كل المعاملات')">CSV كل المعاملات</button><button class="b2" onclick="csv(inR(S.tx,R.m+'-01',eom(R.m)),'معاملات الشهر')">CSV الشهر</button></div></div>`}
+function csv(l,n){const q=v=>'"'+String(v??'').replace(/"/g,'""')+'"',h=['التاريخ','النوع','المبلغ','القسم/المصدر','القسم الفرعي','طريقة الدفع','الوصف','ملاحظات'];
+const r=[...l].sort((a,b)=>a.date.localeCompare(b.date)).map(t=>[disp(t.date),t.type=='in'?'دخل':'مصروف',t.amount,t.type=='in'?t.src:t.cat,t.sub,t.pay,t.desc,t.notes].map(q).join(','));showText(n+' — انسخ والصق في ملف .csv أو Excel',[h.map(q).join(','),...r].join('\n'))}
+function showText(m,txt){const o=document.createElement('div');o.className='ov';o.innerHTML=`<div class="sh"><p>${esc(m)}</p><textarea id="bt" rows="10" readonly>${esc(txt)}</textarea><div class="row"><button class="b" id="cp">نسخ</button><button class="b2" id="x">إغلاق</button></div></div>`;document.body.append(o);
+$('#x').onclick=()=>o.remove();$('#cp').onclick=async()=>{try{await navigator.clipboard.writeText(txt);toast('تم النسخ')}catch(e){$('#bt').select();toast('حدد النص وانسخه يدويًا')}}}
+function setv(){const cats=Object.entries(S.cats);return`<div class="card"><h3>الرصيد الافتتاحي والعملة</h3><label class="k">الرصيد الافتتاحي</label><input type="number" value="${S.start}" onchange="S.start=parseFloat(this.value)||0;save();toast('تم الحفظ')"><label class="k">رمز العملة</label><input value="${esc(S.cur)}" onchange="S.cur=this.value||'ج.م';save()"></div>
+<div class="card"><h3>مصادر الدخل</h3>${S.income.map((s,i)=>`<div class="row"><span>${esc(s)}</span><button class="b2" style="flex:0" onclick="ren('i',${i})">✏️</button><button class="b2 d" style="flex:0" onclick="rem('i',${i})">🗑</button></div>`).join('')}<button class="b2" onclick="add('i')">+ مصدر جديد</button></div>
+<div class="card"><h3>أقسام المصروفات</h3>${cats.map(([c,ss],i)=>`<div style="border-bottom:1px solid var(--bd);padding:8px 0"><div class="row"><b>${esc(c)}</b><button class="b2" style="flex:0" onclick="ren('c',${i})">✏️</button><button class="b2 d" style="flex:0" onclick="rem('c',${i})">🗑</button></div>
+${ss.map((s,j)=>`<div class="row k"><span>• ${esc(s)}</span><button class="b2" style="flex:0" onclick="ren('s',${i},${j})">✏️</button><button class="b2 d" style="flex:0" onclick="rem('s',${i},${j})">🗑</button></div>`).join('')}<button class="b2" onclick="add('s',${i})">+ قسم فرعي</button></div>`).join('')}<button class="b2" onclick="add('c')">+ قسم جديد</button><p class="k">حذف قسم أو مصدر لا يمسح معاملاته القديمة؛ تبقى محفوظة باسمها.</p></div>
+<div class="card"><h3>نسخ احتياطي واستعادة</h3><div class="row"><button class="b" onclick="showText('انسخ هذا النص واحفظه في مكان آمن (ملاحظات/واتساب لنفسك)',JSON.stringify(S))">نسخ احتياطي</button><button class="b2" onclick="restore()">استعادة</button></div></div>`}
+function nm(k,i,j){if(k=='i')return S.income;if(k=='c')return Object.keys(S.cats);return S.cats[Object.keys(S.cats)[i]]}
+function add(k,i){dlg('الاسم الجديد','',v=>{if(k=='i')S.income.push(v);else if(k=='c'){if(S.cats[v])return toast('موجود بالفعل');S.cats[v]=[]}else S.cats[Object.keys(S.cats)[i]].push(v);save();render()})}
+function ren(k,i,j){const l=nm(k,i),o=l[k=='s'?j:i];dlg('الاسم الجديد',o,v=>{if(k=='i'){S.income[i]=v;S.tx.forEach(t=>{if(t.src==o)t.src=v})}
+else if(k=='c'){if(S.cats[v]&&v!=o)return toast('موجود بالفعل');const n={};Object.entries(S.cats).forEach(([a,b])=>n[a==o?v:a]=b);S.cats=n;S.tx.forEach(t=>{if(t.cat==o)t.cat=v})}
+else{const c=Object.keys(S.cats)[i];S.cats[c][j]=v;S.tx.forEach(t=>{if(t.cat==c&&t.sub==o)t.sub=v})}save();render()})}
+function rem(k,i,j){const l=nm(k,i),o=l[k=='s'?j:i];dlg('حذف «'+o+'» من القائمة؟ المعاملات القديمة ستبقى كما هي.',null,()=>{if(k=='i')S.income.splice(i,1);else if(k=='c')delete S.cats[o];else S.cats[Object.keys(S.cats)[i]].splice(j,1);save();render()})}
+function restore(){const o=document.createElement('div');o.className='ov';o.innerHTML=`<div class="sh"><p>الصق نص النسخة الاحتياطية (سيستبدل بياناتك الحالية)</p><textarea id="rt" rows="8"></textarea><div class="row"><button class="b" id="go">استعادة</button><button class="b2" id="x">إلغاء</button></div></div>`;document.body.append(o);$('#x').onclick=()=>o.remove();
+$('#go').onclick=()=>{try{const d=JSON.parse($('#rt').value);if(!Array.isArray(d.tx)||!d.cats||!Array.isArray(d.income))throw 0;if(d.tx.some(t=>!(t.amount>0)||!t.date))throw 0;S=Object.assign(JSON.parse(JSON.stringify(D0)),d);save();o.remove();render();toast('تمت الاستعادة ✓')}catch(e){toast('النسخة الاحتياطية غير صالحة')}}}
+function render(){$('#v').innerHTML={home,tx:txv,rep:repv,set:setv}[tab]()}
+render();
+</script></body></html>
