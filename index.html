@@ -26,7 +26,7 @@ input,select,textarea{width:100%;padding:12px;border:1px solid var(--bd);border-
 .tx{display:flex;justify-content:space-between;gap:8px;padding:10px 0;border-bottom:1px solid var(--bd)}
 #toast{position:fixed;top:12px;left:50%;transform:translateX(-50%);background:#111;color:#fff;padding:10px 16px;border-radius:10px;z-index:30;display:none}
 @media print{nav,.fab,header button,.np{display:none!important}body{background:#fff;color:#000}}
-</style></head><body>
+</style><link rel="manifest" href="manifest.json"><meta name="theme-color" content="#0f766e"><link rel="apple-touch-icon" href="icon-192.png"></head><body>
 <header><span>💰 مصروفي AI</span><button class="b2" onclick="theme()">🌓</button></header><main id="v"></main><div id="toast"></div>
 <button class="b fab" onclick="openForm()" aria-label="إضافة">+</button>
 <nav><button data-t="home" class="on">الرئيسية</button><button data-t="tx">المعاملات</button><button data-t="rep">التقارير</button><button data-t="set">الإعدادات</button></nav>
@@ -129,4 +129,5 @@ function restore(){const o=document.createElement('div');o.className='ov';o.inne
 $('#go').onclick=()=>{try{const d=JSON.parse($('#rt').value);if(!Array.isArray(d.tx)||!d.cats||!Array.isArray(d.income))throw 0;if(d.tx.some(t=>!(t.amount>0)||!t.date))throw 0;S=Object.assign(JSON.parse(JSON.stringify(D0)),d);save();o.remove();render();toast('تمت الاستعادة ✓')}catch(e){toast('النسخة الاحتياطية غير صالحة')}}}
 function render(){$('#v').innerHTML={home,tx:txv,rep:repv,set:setv}[tab]()}
 render();
+if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
 </script></body></html>
